@@ -7,10 +7,10 @@ require "openssl"
 require "base64"
 
 class AmazonSearch
-  HOSTS = {:jp => "webservices.amazon.co.jp",
+  HOSTS = {:ja => "webservices.amazon.co.jp",
            :us => "webservices.amazon.com"}
 
-  attr_reader :message
+  attr_reader :message, :query
 
   def initialize(opts={})
     @access_key = opts[:access_key] || nil
@@ -24,7 +24,7 @@ class AmazonSearch
     @timestamp = time_to_timestamp(opts[:time])
   end
 
-  def <<(query)
+  def query=(query)
     @query = build_query(query)
     @message = [@verb, @host, @uri, @query].join("\n")
     @query
@@ -85,9 +85,9 @@ class AmazonSearch
 
   def host(country)
     case country.to_s.downcase[0..1].to_sym
-    when :jp then HOSTS[:jp]
+    when :ja then HOSTS[:ja]
     when :us then HOSTS[:us]
-    else HOSTS[:jp]
+    else HOSTS[:ja]
     end
   end
 end

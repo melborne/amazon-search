@@ -18,12 +18,12 @@ class TestAmazonSearch < Test::Unit::TestCase
   end
 
   def test_signature_for_string_query
-    @aws << @string_query
+    @aws.query = @string_query
     assert_equal(@result, @aws.signature)
   end
 
   def test_signature_for_hash_query
-    @aws << @hash_query
+    @aws.query = @hash_query
     assert_equal(@result, @aws.signature)
   end
 
@@ -57,7 +57,7 @@ class TestAmazonSearch < Test::Unit::TestCase
                            :secret_key => secret_key,
                            :host => host,
                            :uri => uri)
-    aws << query
+    aws.query = query
     assert_equal(result, aws.signed_request)  
   end
 end
